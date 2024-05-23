@@ -1,0 +1,84 @@
+<div class="m-2">
+
+  <div class="">
+    <div class="w-1/2 my-10">
+      <form  (submit)="submitForm()" [formGroup]="customForm">
+        <div class="my-2">
+          <input
+            id="name"
+            name="name"
+            formControlName="name"
+            type="text"
+            placeholder="Tarea"
+            class="py-2 px-1 border w-full rounded-md"
+          />
+          <app-text-validator title="Tarea requerida" *ngIf="fieldValidator('name')">
+          </app-text-validator>
+        </div>
+        <div class="my-2">
+          <input
+            id="date"
+            name="date"
+            formControlName="date"
+            type="date"
+            placeholder="Fecha"
+            class="py-2 px-1 border w-full rounded-md"
+          />
+          <app-text-validator title="Fecha requerida" *ngIf="fieldValidator('date')">
+          </app-text-validator>
+        </div>
+        <button type="submit"
+          class="font-semibold text-white bg-blue-500 w-full py-2 rounded-md"
+        >
+          Agregar Tarea
+        </button>
+      </form>
+    </div>
+    <div class="flex" cdkDropListGroup >
+      <div
+        id="todo"
+        class="w-1/5 mx-2 h-screen bg-slate-100"
+
+        cdkDropList
+        [cdkDropListData]="tasks"
+        cdkDropListConnectedTo="done"
+        (cdkDropListDropped)="dropped($event)"
+      >
+        <p
+          class="border p-2 my-2 mx-2 shadow-md bg-white text-center font-medium text-black/80"
+        >
+          Por hacer
+        </p>
+        <div *ngFor="let task of tasks" cdkDrag>
+          <div class="border p-2 my-2 mx-2 shadow-md bg-white cursor-pointer">
+            <p>{{ task.name }}</p>
+            <p>{{ task.date }}</p>
+          </div>
+        </div>
+      </div>
+
+      <div
+        id="done"
+        class="w-1/5 h-screen bg-slate-100"
+
+        cdkDropList
+        [cdkDropListData]="dones"
+        cdkDropListConnectedTo="todo"
+        (cdkDropListDropped)="dropped($event)"
+      >
+        <p
+          class="border p-2 my-2 mx-2 shadow-md bg-white text-center font-medium text-black/80"
+        >
+          Completado
+        </p>
+        <div *ngFor="let task of dones" cdkDrag>
+          <div class="border p-2 my-2 mx-2 shadow-md bg-white cursor-pointer">
+            <p>{{ task.name }}</p>
+            <p>{{ task.date }}</p>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
